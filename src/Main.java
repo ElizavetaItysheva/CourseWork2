@@ -23,7 +23,5 @@ public class Main {
         System.out.println(taskService);
         System.out.println(weekly1.appearsIn(LocalDate.of(2023, 2, 2)));
         System.out.println(weekly1.nextAppear());
-
-
     }
 }
