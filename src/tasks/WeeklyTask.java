@@ -1,5 +1,4 @@
 package tasks;
-import exceptions.IncorrectArgumentException;
 import tasks.type.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,19 +7,11 @@ public class WeeklyTask extends Task {
     public WeeklyTask( String title, String description, Type type, LocalDateTime dateTime ) {
         super(title, description, type, dateTime);
     }
-
-    @Override
-    public LocalDateTime nextAppear() {
-        return this.getDateTime().plusWeeks(1);
-    }
-
     @Override
     public boolean appearsIn( LocalDate localDate ) {
-        if (localDate.isAfter(getDateTime().toLocalDate())) {
-            return true;
-        }else {
-            throw new IncorrectArgumentException("Некорректный аргумент.");
-        }
+        // если дата аргумента позже даты создания задачи И если день недели аргумента равен дню недели задачи
+        // то есть должно повторяться каждый ТАКОЙ же день недели, который ПОСЛЕ создания задачи.
+       return  localDate.isAfter(getDateTime().toLocalDate()) && localDate.getDayOfWeek() == getDateTime().getDayOfWeek();
     }
     @Override
     public String toString() {
