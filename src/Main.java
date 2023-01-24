@@ -1,7 +1,6 @@
 import services.TaskService;
 import tasks.*;
 import tasks.type.Type;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,8 +19,6 @@ public class Main {
         taskService.add(monthly1);
         taskService.add(weekly1);
 
-        System.out.println(taskService);
-        System.out.println(weekly1.appearsIn(LocalDate.of(2023, 2, 2)));
-        System.out.println(weekly1.nextAppear());
+        System.out.println(taskService.getAllByDate(LocalDate.of(2023,2,10)));
     }
 }

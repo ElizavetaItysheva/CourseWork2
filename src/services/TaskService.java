@@ -1,26 +1,16 @@
 package services;
-
 import exceptions.IncorrectArgumentException;
 import exceptions.TaskNotFoundException;
 import tasks.Task;
-
 import java.time.LocalDate;
 import java.util.*;
 
 public class TaskService {
-    // создала отдельную статическую переменную, которая по сути равна id задачи(не работает, если добавить в метод add id задачи)
-    private static int key;
-
     private final Map<Integer, Task> taskMap = new HashMap<>();
    private final List<Task> removedTasks = new ArrayList<>();
 
    public void add(Task task){
-       if(!(task == null)) {
-           taskMap.put(key, task);
-           key += 1;
-       } else {
-           throw new TaskNotFoundException("Задача не существует.");
-       }
+           taskMap.put(task.getId(), task);
    }
    public Task remove(int id){
        if (id <= 0){
@@ -36,10 +26,18 @@ public class TaskService {
        }
    }
    public List<Task> getAllByDate( LocalDate localDate ){
+       //создаем лист куда будем бережно складывать задачи нужной даты
        List<Task> currentTasks = new ArrayList<>();
+       //проходимся по мапе
        for(Map.Entry<Integer, Task> integerTaskEntry : taskMap.entrySet()){
-           if(localDate.isEqual(integerTaskEntry.getValue().getDateTime().toLocalDate())){
+           //если задача появится в аргументе ИЛИ если дата задачи равна аргументу
+           if(integerTaskEntry.getValue().appearsIn(localDate) || integerTaskEntry.getValue().getDateTime().toLocalDate().equals(localDate)){
+               //то добавляем эту задачу в лист
                currentTasks.add(integerTaskEntry.getValue());
+           }
+           // если список пуст, то выкидываем ошибку
+           if(currentTasks.isEmpty()){
+               throw new TaskNotFoundException("Задача не найдена!");
            }
        }
        return currentTasks;
