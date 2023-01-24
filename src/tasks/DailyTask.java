@@ -14,7 +14,9 @@ public class DailyTask extends Task {
     @Override
     public boolean appearsIn(LocalDate localDate) {
         // если аргумент позже даты задачи И если день года аргумента больше дня создания задачи
-        return  localDate.isAfter(getDateTime().toLocalDate()) && localDate.getDayOfYear() > getDateTime().getDayOfYear();
+        return  (localDate.isAfter(getDateTime().toLocalDate()) && localDate.getDayOfYear() > getDateTime().getDayOfYear()) ||
+                // или если год аргумента больше года задачи И если день года меньше или равен дню года задачи
+                (localDate.getYear() > getDateTime().getYear() && localDate.getDayOfYear()<=getDateTime().getDayOfYear());
     }
     @Override
     public String toString() {

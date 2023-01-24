@@ -46,7 +46,6 @@ public abstract class Task {
         this.id = idGenerator;
         idGenerator++;
     }
-
     public String getTitle() {
         return title;
     }
@@ -101,6 +100,6 @@ public abstract class Task {
                 + "\n"
                 + "Тип: " + type.getTypeOf()
                 + "\n"
-                + "Дата выполнения: " + dateTime.format(DateTimeFormatter.ISO_DATE);
+                + "Дата создания: " + dateTime.format(DateTimeFormatter.ISO_DATE);
     }
 }
