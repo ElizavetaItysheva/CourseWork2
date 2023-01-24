@@ -1,45 +1,76 @@
 package services;
-
-import exceptions.IncorrectArgumentException;
 import exceptions.TaskNotFoundException;
+import tasks.OneTimeTask;
 import tasks.Task;
+import tasks.type.Type;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TaskService {
-    // создала отдельную статическую переменную, которая по сути равна id задачи(не работает, если добавить в метод add id задачи)
-    private static int key;
-
     private final Map<Integer, Task> taskMap = new HashMap<>();
    private final List<Task> removedTasks = new ArrayList<>();
 
    public void add(Task task){
-       if(!(task == null)) {
-           taskMap.put(key, task);
-           key += 1;
-       } else {
-           throw new TaskNotFoundException("Задача не существует.");
-       }
+           taskMap.put(task.getId(), task);
    }
    public Task remove(int id){
-       if (id <= 0){
-           throw new IncorrectArgumentException("Некорректный аргумент");
-       } else {
            for (Map.Entry<Integer, Task> integerTaskEntry : taskMap.entrySet()) {
                if (integerTaskEntry.getValue().getId() == id) {
                    removedTasks.add(integerTaskEntry.getValue());
-
                }
            }
            return taskMap.remove(id);
        }
-   }
-   public List<Task> getAllByDate( LocalDate localDate ){
-       List<Task> currentTasks = new ArrayList<>();
+    public List<Task> getRemovedTasks() {
+       if(!(removedTasks.isEmpty())) {
+           return removedTasks;
+       }else {
+           throw new TaskNotFoundException("Удалённых задач нет!");
+       }
+    }
+    public Map<LocalDate, List<Task>> getAllGroupByDate(){
+       // создала мапу темпорари, которую потом верну
+       Map<LocalDate, List<Task>> temp = new HashMap<>();
+       // прохожусь по мапе задач
        for(Map.Entry<Integer, Task> integerTaskEntry : taskMap.entrySet()){
-           if(localDate.isEqual(integerTaskEntry.getValue().getDateTime().toLocalDate())){
+           //складываю в темпорари в ключ - время создания первой задачи, в значение - метод, который вернёт список задач нужной даты
+           temp.put(integerTaskEntry.getValue().getDateTime().toLocalDate(), getAllByDate(integerTaskEntry.getValue().getDateTime().toLocalDate()));
+       }
+       return temp;
+    }
+    public Task updateDescription(int id, String newDescription){
+       //создаю темпорари задачу, которую потом верну
+       Task temp = new OneTimeTask("1","1", Type.PERSONAL, LocalDateTime.now());
+        //прохожусь снова по мапе, в поисках нужной задачи
+        for(Map.Entry<Integer, Task> taskEntry : taskMap.entrySet()){
+            // и если такая задача есть, то
+            if(taskEntry.getValue().getId() == id){
+                // у этой задачи вызываю сеттер и вставляю туда новое описание
+                taskEntry.getValue().setDescription(newDescription);
+                // приравниваю задаче-болванке значения нужной задачи
+                temp = taskEntry.getValue();
+                // а если задачи с таким айди не существует, то выброшу ошибку
+            } else {
+                throw new TaskNotFoundException("Задачи с таким id не нашлось :(");
+            }
+        }
+        return temp;
+    }
+    public List<Task> getAllByDate( LocalDate localDate ){
+       //создаем лист куда будем бережно складывать задачи нужной даты
+       List<Task> currentTasks = new ArrayList<>();
+       //проходимся по мапе
+       for(Map.Entry<Integer, Task> integerTaskEntry : taskMap.entrySet()){
+           //если задача появится в аргументе ИЛИ если дата задачи равна аргументу
+           if(integerTaskEntry.getValue().appearsIn(localDate) || integerTaskEntry.getValue().getDateTime().toLocalDate().equals(localDate)){
+               //то добавляем эту задачу в лист
                currentTasks.add(integerTaskEntry.getValue());
+           }
+           // если список пуст, то выкидываем ошибку
+           if(currentTasks.isEmpty()){
+               throw new TaskNotFoundException("Задача не найдена!");
            }
        }
        return currentTasks;
@@ -53,6 +84,7 @@ public class TaskService {
             sb.append('\n');
             sb.append('\n');
         }
+        sb.append('\n');
         return String.valueOf(sb);
     }
 }

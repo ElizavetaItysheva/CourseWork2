@@ -1,4 +1,5 @@
 package tasks;
+import exceptions.IncorrectArgumentException;
 import tasks.type.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,17 +15,37 @@ public abstract class Task {
     //айди
     private final int id;
     // генератор айди
-    private final static int idGenerator = 0;
+    private static int idGenerator = 0;
     private final LocalDateTime dateTime;
 
     public Task( String title, String description, Type type, LocalDateTime dateTime ) {
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.dateTime = dateTime;
-        this.id = idGenerator + 1;
+        // проверка заголовка на нул, на пустоту и на пробел
+        if(title == null || title.isEmpty() || title.isBlank()){
+            throw new IncorrectArgumentException("Не введён заголовок!");
+        } else {
+            this.title = title;
+        }
+        // аналогичная проверка описания
+        if(description == null || description.isEmpty() || description.isBlank()){
+            throw new IncorrectArgumentException("Не введено описание!");
+        } else {
+            this.description = description;
+        }
+        // проверка типа на нул
+        if (type == null){
+            throw new IncorrectArgumentException("Не введен тип задачи!");
+        } else {
+            this.type = type;
+        }
+        // проверка даты на нул
+        if(dateTime == null){
+            throw new IncorrectArgumentException("Не введена дата создания или не верная дата!");
+        }else {
+            this.dateTime = dateTime;
+        }
+        this.id = idGenerator;
+        idGenerator++;
     }
-
     public String getTitle() {
         return title;
     }
@@ -46,14 +67,21 @@ public abstract class Task {
     }
 
     public void setTitle( String title ) {
-        this.title = title;
+        if(title == null || title.isEmpty() || title.isBlank()){
+            throw new IncorrectArgumentException("Не введён заголовок!");
+        } else {
+            this.title = title;
+        }
     }
 
     public void setDescription( String description ) {
-        this.description = description;
+        if(description == null || description.isEmpty() || description.isBlank()){
+            throw new IncorrectArgumentException("Не введено описание!");
+        } else {
+            this.description = description;
+        }
     }
     public abstract boolean appearsIn(LocalDate localDate);
-    public abstract LocalDateTime nextAppear();
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -72,6 +100,6 @@ public abstract class Task {
                 + "\n"
                 + "Тип: " + type.getTypeOf()
                 + "\n"
-                + "Дата выполнения: " + dateTime.format(DateTimeFormatter.ISO_DATE);
+                + "Дата создания: " + dateTime.format(DateTimeFormatter.ISO_DATE);
     }
 }

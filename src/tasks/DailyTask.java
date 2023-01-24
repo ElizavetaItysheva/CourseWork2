@@ -9,18 +9,14 @@ public class DailyTask extends Task {
         super(title, description, type, dateTime);
     }
 
-    @Override
-    public LocalDateTime nextAppear() {
-        return this.getDateTime().plusDays(1);
-    }
+
 
     @Override
     public boolean appearsIn(LocalDate localDate) {
-        if (localDate.isAfter(getDateTime().toLocalDate())) {
-            return true;
-        }else {
-            throw new IncorrectArgumentException("Некорректный аргумент.");
-        }
+        // если аргумент позже даты задачи И если день года аргумента больше дня создания задачи
+        return  (localDate.isAfter(getDateTime().toLocalDate()) && localDate.getDayOfYear() > getDateTime().getDayOfYear()) ||
+                // или если год аргумента больше года задачи И если день года меньше или равен дню года задачи
+                (localDate.getYear() > getDateTime().getYear() && localDate.getDayOfYear()<=getDateTime().getDayOfYear());
     }
     @Override
     public String toString() {
