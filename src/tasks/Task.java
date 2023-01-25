@@ -6,38 +6,23 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
-    //заголовок
     private String title;
-    // описание
     private String description;
-    // тип задачи
     private final Type type;
-    //айди
     private final int id;
-    // генератор айди
     private static int idGenerator = 0;
     private final LocalDateTime dateTime;
 
     public Task( String title, String description, Type type, LocalDateTime dateTime ) {
-        // проверка заголовка на нул, на пустоту и на пробел
-        if(title == null || title.isEmpty() || title.isBlank()){
-            throw new IncorrectArgumentException("Не введён заголовок!");
-        } else {
-            this.title = title;
-        }
-        // аналогичная проверка описания
-        if(description == null || description.isEmpty() || description.isBlank()){
-            throw new IncorrectArgumentException("Не введено описание!");
-        } else {
-            this.description = description;
-        }
-        // проверка типа на нул
+         this.title = checkTitleAndDescription(title);
+        this.description = checkTitleAndDescription(description);
+
         if (type == null){
             throw new IncorrectArgumentException("Не введен тип задачи!");
         } else {
             this.type = type;
         }
-        // проверка даты на нул
+
         if(dateTime == null){
             throw new IncorrectArgumentException("Не введена дата создания или не верная дата!");
         }else {
@@ -45,6 +30,13 @@ public abstract class Task {
         }
         this.id = idGenerator;
         idGenerator++;
+    }
+    private String checkTitleAndDescription(String text)throws IncorrectArgumentException{
+        if(text == null || text.isEmpty() || text.isBlank()){
+            throw new IncorrectArgumentException("Не введён текст!");
+        } else {
+            return text;
+        }
     }
 
     public String getTitle() {
@@ -68,19 +60,11 @@ public abstract class Task {
     }
 
     public void setTitle( String title ) {
-        if(title == null || title.isEmpty() || title.isBlank()){
-            throw new IncorrectArgumentException("Не введён заголовок!");
-        } else {
-            this.title = title;
-        }
+        this.title = checkTitleAndDescription(title);
     }
 
     public void setDescription( String description ) {
-        if(description == null || description.isEmpty() || description.isBlank()){
-            throw new IncorrectArgumentException("Не введено описание!");
-        } else {
-            this.description = description;
-        }
+        this.description = checkTitleAndDescription(description);
     }
     public abstract boolean appearsIn(LocalDate localDate);
     @Override
