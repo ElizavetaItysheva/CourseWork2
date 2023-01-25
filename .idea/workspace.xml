@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0cb856b-e216-4140-8fc9-085a2ee820ef" name="Changes" comment="part1">
+    <list default="true" id="f0cb856b-e216-4140-8fc9-085a2ee820ef" name="Changes" comment="part1(x3)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tasks/DailyTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tasks/DailyTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tasks/MonthlyTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tasks/MonthlyTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tasks/OneTimeTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tasks/OneTimeTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tasks/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tasks/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tasks/WeeklyTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tasks/WeeklyTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tasks/YearlyTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tasks/YearlyTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="part1x3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,6 +65,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -82,7 +78,8 @@
       <option name="presentableId" value="Default" />
       <updated>1674460066941</updated>
       <workItem from="1674460068721" duration="24775000" />
-      <workItem from="1674549308623" duration="8985000" />
+      <workItem from="1674549308623" duration="14064000" />
+      <workItem from="1674633814534" duration="118000" />
     </task>
     <task id="LOCAL-00001" summary="to master">
       <created>1674490381807</created>
@@ -98,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674490415674</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="part1(x2)">
+      <created>1674559277076</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1674559277076</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +111,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="to master" />
     <MESSAGE value="part1" />
-    <option name="LAST_COMMIT_MESSAGE" value="part1" />
+    <MESSAGE value="part1(x2)" />
+    <option name="LAST_COMMIT_MESSAGE" value="part1(x2)" />
   </component>
 </project>
