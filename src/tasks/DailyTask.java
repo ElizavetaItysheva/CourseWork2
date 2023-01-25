@@ -1,5 +1,4 @@
 package tasks;
-import exceptions.IncorrectArgumentException;
 import tasks.type.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,18 +8,13 @@ public class DailyTask extends Task {
         super(title, description, type, dateTime);
     }
 
-    @Override
-    public LocalDateTime nextAppear() {
-        return this.getDateTime().plusDays(1);
-    }
+
 
     @Override
     public boolean appearsIn(LocalDate localDate) {
-        if (localDate.isAfter(getDateTime().toLocalDate())) {
-            return true;
-        }else {
-            throw new IncorrectArgumentException("Некорректный аргумент.");
-        }
+        // если аргумент позже даты задачи И всё -_-
+        // разве что во вчера она не появится, потому что вчера это перед, а не после :D
+        return  localDate.isAfter(getDateTime().toLocalDate());
     }
     @Override
     public String toString() {
