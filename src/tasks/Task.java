@@ -1,28 +1,42 @@
 package tasks;
+import exceptions.IncorrectArgumentException;
 import tasks.type.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
-    //заголовок
     private String title;
-    // описание
     private String description;
-    // тип задачи
     private final Type type;
-    //айди
     private final int id;
-    // генератор айди
-    private final static int idGenerator = 0;
+    private static int idGenerator = 0;
     private final LocalDateTime dateTime;
 
     public Task( String title, String description, Type type, LocalDateTime dateTime ) {
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.dateTime = dateTime;
-        this.id = idGenerator + 1;
+         this.title = checkTitleAndDescription(title);
+        this.description = checkTitleAndDescription(description);
+
+        if (type == null){
+            throw new IncorrectArgumentException("Не введен тип задачи!");
+        } else {
+            this.type = type;
+        }
+
+        if(dateTime == null){
+            throw new IncorrectArgumentException("Не введена дата создания или не верная дата!");
+        }else {
+            this.dateTime = dateTime;
+        }
+        this.id = idGenerator;
+        idGenerator++;
+    }
+    private String checkTitleAndDescription(String text)throws IncorrectArgumentException{
+        if(text == null || text.isEmpty() || text.isBlank()){
+            throw new IncorrectArgumentException("Не введён текст!");
+        } else {
+            return text;
+        }
     }
 
     public String getTitle() {
@@ -46,14 +60,13 @@ public abstract class Task {
     }
 
     public void setTitle( String title ) {
-        this.title = title;
+        this.title = checkTitleAndDescription(title);
     }
 
     public void setDescription( String description ) {
-        this.description = description;
+        this.description = checkTitleAndDescription(description);
     }
     public abstract boolean appearsIn(LocalDate localDate);
-    public abstract LocalDateTime nextAppear();
     @Override
     public int hashCode() {
         return super.hashCode();
